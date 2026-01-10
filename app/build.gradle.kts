@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -63,6 +64,9 @@ android {
         implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
         debugImplementation(libs.androidx.compose.ui.tooling)
 
+        implementation(libs.androidx.navigation.compose)
+        implementation("androidx.compose.material:material-icons-extended:1.7.8")
+
         // 生命周期监听 (Lifecycle & ViewModel)
         implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
         implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
@@ -82,7 +86,9 @@ android {
         // 网络请求 (Retrofit & Gson)
         implementation("com.squareup.retrofit2:retrofit:3.0.0")
         implementation("com.squareup.retrofit2:converter-gson:3.0.0")
-        implementation("com.google.code.gson:gson:2.13.2")
+        implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+        // Kotlin Serialization JSON 库
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
         // 图片加载
         implementation("io.coil-kt.coil3:coil-compose:3.3.0")
