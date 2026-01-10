@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -40,7 +41,15 @@ android {
             compose = true
         }
     }
-
+    packaging {
+        resources {
+            // 使用 excludes 直接将其从打包过程中剔除
+            excludes.add("META-INF/INDEX.LIST")
+            excludes.add("META-INF/DEPENDENCIES")
+             excludes.add("META-INF/io.netty.versions.properties")
+            // excludes.add("META-INF/okio.kotlin_module")
+        }
+    }
     dependencies {
         implementation(libs.androidx.core.ktx)
         implementation(libs.androidx.lifecycle.runtime.ktx)
