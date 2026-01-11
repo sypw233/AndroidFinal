@@ -19,6 +19,15 @@ sealed class Screen {
     data object Login : Screen()
 
     @Serializable
+    data object Setting : Screen()
+
+    @Serializable
+    data object Intro : Screen()
+
+    @Serializable
+    data object Splash : Screen()
+
+    @Serializable
     data class WebView(
         val url: String,
         val title: String = ""
