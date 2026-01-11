@@ -46,7 +46,7 @@ object PreferenceUtils {
      * 是否使用 Google AdMob 开屏广告
      */
     fun useGoogleAd(context: Context): Boolean {
-        return getPreferences(context).getBoolean(KEY_USE_GOOGLE_AD, false)
+        return getPreferences(context).getBoolean(KEY_USE_GOOGLE_AD, true)
     }
 
     fun setUseGoogleAd(context: Context, useGoogle: Boolean) {
