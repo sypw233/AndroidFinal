@@ -1,5 +1,7 @@
 package ovo.sypw.wmx420.androidfinal.utils
 
+import com.google.firebase.auth.FirebaseUser
+import ovo.sypw.wmx420.androidfinal.data.model.User
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -27,4 +29,16 @@ fun String.formatDate(): String {
         e.printStackTrace()
         this
     }
+}
+
+fun FirebaseUser.toUser(): User {
+    return User(
+        uid = uid,
+        email = email ?: "",
+        avatarUrl = photoUrl?.toString(),
+        displayName = displayName
+    )
+
+
+
 }

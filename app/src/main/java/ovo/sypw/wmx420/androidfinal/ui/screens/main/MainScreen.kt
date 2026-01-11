@@ -108,7 +108,11 @@ fun MainScreen(navController: NavHostController) {
                 VideoScreen()
             }
             composable<Screen.Me> {
-                MeScreen()
+                MeScreen(
+                    onLoginClick = {  },
+                    onMapClick = {  },
+                    onSettingsClick = {  }
+                )
             }
         }
     }
