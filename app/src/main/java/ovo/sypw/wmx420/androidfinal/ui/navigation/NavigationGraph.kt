@@ -9,12 +9,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import ovo.sypw.wmx420.androidfinal.ui.screens.intro.IntroScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.main.MainScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.me.login.LoginScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.me.map.MapScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.settings.SettingsScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.splash.SplashScreen
+import ovo.sypw.wmx420.androidfinal.ui.screens.video.VideoDetailScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.webview.WebViewScreen
 import ovo.sypw.wmx420.androidfinal.utils.PreferenceUtils
 
@@ -47,6 +49,13 @@ fun AppNavigation(
                 onBack = { navController.popBackStack() }
             )
         }
+        composable<Screen.VideoDetail> { backStackEntry ->
+            val args = backStackEntry.toRoute<Screen.VideoDetail>()
+            VideoDetailScreen(
+                videoId = args.videoId,
+                onBack = { navController.popBackStack() }
+            )
+        }
         composable<Screen.Main> {
             MainScreen(
                 navController = navController
@@ -72,7 +81,6 @@ fun AppNavigation(
             )
         }
         composable<Screen.Map>(
-//            enterTransition = { EnterTransition.None },
             exitTransition = { ExitTransition.None },
             popEnterTransition = { EnterTransition.None },
             popExitTransition = { ExitTransition.None }

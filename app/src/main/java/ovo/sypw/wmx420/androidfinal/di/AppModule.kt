@@ -8,8 +8,10 @@ import ovo.sypw.wmx420.androidfinal.data.remote.ApiService
 import ovo.sypw.wmx420.androidfinal.data.remote.RetrofitClient
 import ovo.sypw.wmx420.androidfinal.data.repository.NewsRepository
 import ovo.sypw.wmx420.androidfinal.data.repository.UserRepository
+import ovo.sypw.wmx420.androidfinal.data.repository.VideoRepository
 import ovo.sypw.wmx420.androidfinal.ui.screens.home.HomeViewModel
 import ovo.sypw.wmx420.androidfinal.ui.screens.me.MeViewModel
+import ovo.sypw.wmx420.androidfinal.ui.screens.video.VideoViewModel
 
 val networkModule = module {
     single { RetrofitClient.okHttpClient }
@@ -19,6 +21,7 @@ val networkModule = module {
 val repositoryModule = module {
     single { NewsRepository(get(), androidContext()) }
     single { UserRepository() }
+    single { VideoRepository() }
 }
 
 
@@ -27,4 +30,5 @@ val viewModelModule = module {
 //    viewModelOf(::VideoViewModel)
     viewModelOf(::MeViewModel)
     viewModelOf(::LoginViewModel)
+    viewModelOf(::VideoViewModel)
 }

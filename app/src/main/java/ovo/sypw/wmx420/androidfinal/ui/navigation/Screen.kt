@@ -13,6 +13,11 @@ sealed class Screen {
     data object Video : Screen()
 
     @Serializable
+    data class VideoDetail(
+        val videoId: String
+    ) : Screen()
+
+    @Serializable
     data object Me : Screen()
 
     @Serializable

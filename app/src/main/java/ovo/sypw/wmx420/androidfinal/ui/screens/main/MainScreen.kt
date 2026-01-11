@@ -105,7 +105,11 @@ fun MainScreen(navController: NavHostController) {
                 )
             }
             composable<Screen.Video> {
-                VideoScreen()
+                VideoScreen(
+                    onVideoClick = { video ->
+                        navController.navigate(Screen.VideoDetail(video.id))
+                    }
+                )
             }
             composable<Screen.Me> {
                 MeScreen(
