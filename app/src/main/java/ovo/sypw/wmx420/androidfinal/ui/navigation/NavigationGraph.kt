@@ -1,5 +1,7 @@
 package ovo.sypw.wmx420.androidfinal.ui.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -10,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import ovo.sypw.wmx420.androidfinal.ui.screens.intro.IntroScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.main.MainScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.me.login.LoginScreen
+import ovo.sypw.wmx420.androidfinal.ui.screens.me.map.MapScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.settings.SettingsScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.splash.SplashScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.webview.WebViewScreen
@@ -67,6 +70,14 @@ fun AppNavigation(
             SplashScreen(
                 navigateToMain = { navController.navigate(Screen.Main) }
             )
+        }
+        composable<Screen.Map>(
+//            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = { ExitTransition.None }
+        ) {
+            MapScreen { navController.popBackStack() }
         }
 
     }

@@ -112,7 +112,9 @@ fun MainScreen(navController: NavHostController) {
                     onLoginClick = {
                         navController.navigate(Screen.Login)
                     },
-                    onMapClick = { },
+                    onMapClick = {
+                        navController.navigate(Screen.Map)
+                    },
                     onSettingsClick = {
                         navController.navigate(Screen.Setting)
                     }
