@@ -30,7 +30,7 @@ class MeViewModel(
             }
         }
     }
-    fun logOut(){
+    fun logout(){
         viewModelScope.launch {
             userRepository.signOut()
             _uiState.value = MeUiState.LoggedOut

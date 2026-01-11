@@ -33,7 +33,7 @@ fun MainScreen(navController: NavHostController) {
                         label = { Text(item.label) },
                         selected = currentDestination == item.screen,
                         onClick = {
-                            bottomNavController.navigate(item.screen){
+                            bottomNavController.navigate(item.screen) {
                                 popUpTo(bottomNavController.graph.startDestinationId) {
                                     saveState = true
                                 }
@@ -109,9 +109,11 @@ fun MainScreen(navController: NavHostController) {
             }
             composable<Screen.Me> {
                 MeScreen(
-                    onLoginClick = {  },
-                    onMapClick = {  },
-                    onSettingsClick = {  }
+                    onLoginClick = {
+                        navController.navigate(Screen.Login)
+                    },
+                    onMapClick = { },
+                    onSettingsClick = { }
                 )
             }
         }

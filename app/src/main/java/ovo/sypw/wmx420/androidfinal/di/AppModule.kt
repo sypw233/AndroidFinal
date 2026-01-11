@@ -3,6 +3,7 @@ package ovo.sypw.wmx420.androidfinal.di
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import ovo.sypw.androidendproject.ui.screens.login.LoginViewModel
 import ovo.sypw.wmx420.androidfinal.data.remote.ApiService
 import ovo.sypw.wmx420.androidfinal.data.remote.RetrofitClient
 import ovo.sypw.wmx420.androidfinal.data.repository.NewsRepository
@@ -25,4 +26,5 @@ val viewModelModule = module {
     viewModelOf(::HomeViewModel)
 //    viewModelOf(::VideoViewModel)
     viewModelOf(::MeViewModel)
+    viewModelOf(::LoginViewModel)
 }

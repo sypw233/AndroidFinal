@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ovo.sypw.wmx420.androidfinal.ui.screens.main.MainScreen
+import ovo.sypw.wmx420.androidfinal.ui.screens.me.login.LoginScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.webview.WebViewScreen
 
 @Composable
@@ -31,5 +32,12 @@ fun AppNavigation(
                 navController = navController
             )
         }
+        composable<Screen.Login> {
+            LoginScreen(
+                onLoginSuccess = { navController.popBackStack() },
+                onBack = { navController.popBackStack() }
+            )
+        }
+
     }
 }

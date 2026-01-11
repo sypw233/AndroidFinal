@@ -95,11 +95,11 @@ android {
         implementation(libs.coil.network.okhttp)
 
         // Firebase
-        implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
+        implementation(platform(libs.firebase.bom))
         implementation(libs.firebase.analytics)
         implementation(libs.firebase.auth)
         implementation(libs.firebase.firestore)
-
+        implementation(libs.play.services.auth)
         // Media3 ExoPlayer
         implementation(libs.androidx.media3.exoplayer)
         implementation(libs.androidx.media3.ui)

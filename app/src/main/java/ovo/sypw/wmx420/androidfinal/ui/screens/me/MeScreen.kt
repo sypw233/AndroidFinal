@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.ChevronRight
@@ -64,7 +65,7 @@ fun MeScreen(
             is MeUiState.LoggedOut -> {
                 ProfileCard(
                     user = null,
-                    onLoginClick = { },
+                    onLoginClick = onLoginClick,
                 )
             }
 
@@ -86,23 +87,38 @@ fun MeScreen(
         Spacer(modifier = Modifier.weight(1f))
 
         if (uiState is MeUiState.LoggedIn) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                onClick = {
-                    viewModel.logOut()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Logout,
-                    contentDescription = "退出登录",
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Text("退出登录")
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ){
+                LoggingOutCard(viewModel::logout)
             }
         }
 
+    }
+}
+
+@Composable
+fun LoggingOutCard(
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .padding(vertical = 8.dp, horizontal = 16.dp),
+        shape = RoundedCornerShape(8.dp),
+        onClick = onClick
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(vertical = 8.dp, horizontal = 16.dp),
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.Logout,
+                contentDescription = "退出登录",
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("退出登录")
+        }
     }
 }
 
@@ -168,7 +184,7 @@ fun ProfileCard(
                 Text(
                     text = displayName,
                     style = MaterialTheme.typography.titleLarge,
-                    maxLines = 1, // 防止名字过长换行破坏布局
+                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(

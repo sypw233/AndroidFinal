@@ -49,10 +49,9 @@ fun NewsItemOnlyText(
     news: News
 ) {
     Column(
-        Modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)
-
     ) {
         Text(
             text = news.title,
@@ -60,9 +59,9 @@ fun NewsItemOnlyText(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
+        Spacer(modifier = Modifier.height(12.dp))
+        NewsDetails(news)
     }
-    Spacer(modifier = Modifier.height(8.dp))
-    NewsDetails(news)
 }
 
 @Composable
@@ -85,18 +84,19 @@ fun NewsItemHasImage(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             NewsDetails(news)
         }
-        AsyncImage(
-            model = news.imageUrl,
-            contentDescription = null,
-            modifier = Modifier
-                .size(90.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Crop
-        )
-
+        news.imageUrl?.let { url ->
+            AsyncImage(
+                model = url,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(90.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
+            )
+        }
     }
 }
 
@@ -111,14 +111,12 @@ private fun NewsDetails(news: News) {
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Row{
+        Row {
             Text(
                 text = news.publishTime,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-
-
     }
 }
