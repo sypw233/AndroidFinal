@@ -52,7 +52,7 @@ class AppOpenAdManager(private val application: Application) : DefaultLifecycleO
      * 检查是否启用 Google 广告
      */
     private fun isGoogleAdEnabled(): Boolean {
-        return PreferenceUtils.useGoogleAd(application)
+        return PreferenceUtils.enableGoogleAd(application)
     }
 
     /**

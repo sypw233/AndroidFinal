@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import ovo.sypw.wmx420.androidfinal.ui.screens.intro.IntroScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.main.MainScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.me.login.LoginScreen
+import ovo.sypw.wmx420.androidfinal.ui.screens.settings.SettingsScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.splash.SplashScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.webview.WebViewScreen
 import ovo.sypw.wmx420.androidfinal.utils.PreferenceUtils
@@ -22,7 +23,7 @@ fun AppNavigation(
     val context = LocalContext.current
     val adEnable = PreferenceUtils.isAdEnabled(context)
     val firstLaunch = PreferenceUtils.isFirstLaunch(context)
-    val googleAdEnable = PreferenceUtils.useGoogleAd(context)
+    val googleAdEnable = PreferenceUtils.enableGoogleAd(context)
     val startDestination = if (firstLaunch) {
         Screen.Intro
     } else if (adEnable) {
@@ -54,7 +55,9 @@ fun AppNavigation(
                 onBack = { navController.popBackStack() }
             )
         }
-        composable<Screen.Setting> { }
+        composable<Screen.Setting> {
+            SettingsScreen { navController.popBackStack() }
+        }
         composable<Screen.Intro> {
             IntroScreen(
                 onFinish = { navController.navigate(Screen.Main) }
