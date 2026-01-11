@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,10 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
-import ovo.sypw.wmx420.androidfinal.data.model.Banner
-import ovo.sypw.wmx420.androidfinal.data.model.News
+import ovo.sypw.wmx420.androidfinal.ui.screens.components.ErrorView
 import ovo.sypw.wmx420.androidfinal.ui.screens.components.LoadingIndicator
 import ovo.sypw.wmx420.androidfinal.ui.screens.home.components.BannerView
+import ovo.sypw.wmx420.androidfinal.ui.screens.home.components.CategoryButtonRow
 import ovo.sypw.wmx420.androidfinal.ui.screens.home.components.NewsItem
 
 @Composable
@@ -35,6 +35,7 @@ fun HomeScreen(
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
+
     // 监听刷新事件
     LaunchedEffect(Unit) {
         viewModel.refreshEvent.collect { result ->
@@ -49,16 +50,10 @@ fun HomeScreen(
             )
         }
     }
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         PullToRefreshBox(
             isRefreshing = isRefreshing,
-            onRefresh = {
-//                TODO
-                viewModel.loadData()
-            },
+            onRefresh = { viewModel.refresh() },
             modifier = Modifier.fillMaxSize()
         ) {
             when (uiState) {
@@ -76,6 +71,11 @@ fun HomeScreen(
 //                        TODO
                                     })
                             }
+                        }
+                        item(key = "何意味button"){
+                            CategoryButtonRow(
+                                onCategoryClick = {  },
+                            )
                         }
                         items(newsList, key = { it.id }) { news ->
                             Log.d("HomeScreen", "NewsList: $news")
@@ -97,49 +97,18 @@ fun HomeScreen(
                     }
                 }
 
-                is HomeUiState.Error -> Text(text = (uiState as HomeUiState.Error).message)
-            }
-        }
-
-    }
-}
-
-
-@Composable
-fun NewsView(
-    viewModel: HomeViewModel = koinInject(),
-    bannerList: List<Banner>,
-    newsList: List<News>,
-    hasMore: Boolean = false,
-) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        if (bannerList.isNotEmpty()) {
-            item(key = "banner") {
-                BannerView(
-                    bannerList = bannerList,
-                    onClick = {
-//                        TODO
-                    })
-            }
-        }
-        items(newsList, key = { it.id }) { news ->
-            Log.d("HomeScreen", "NewsList: $news")
-            NewsItem(
-                news = news,
-                onClick = {
-//                    TODO
-                },
-            )
-        }
-        if (hasMore) {
-            item(key = "load_more") {
-                LaunchedEffect(Unit) {
-                    viewModel.loadMore()
+                is HomeUiState.Error -> {
+                    ErrorView(
+                        message = (uiState as HomeUiState.Error).message,
+                        onRetry = { viewModel.loadData() }
+                    )
                 }
-                LoadingIndicator(modifier = Modifier.padding(16.dp))
             }
         }
+
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
