@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import ovo.sypw.wmx420.androidfinal.ui.navigation.AppNavigation
-import ovo.sypw.wmx420.androidfinal.ui.screens.main.MainScreen
 import ovo.sypw.wmx420.androidfinal.ui.theme.AndroidFinalTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidFinalTheme {
-                MainScreen()
+                AppNavigation()
             }
         }
     }

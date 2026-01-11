@@ -19,6 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
+import ovo.sypw.wmx420.androidfinal.data.model.Banner
+import ovo.sypw.wmx420.androidfinal.data.model.News
 import ovo.sypw.wmx420.androidfinal.ui.screens.components.ErrorView
 import ovo.sypw.wmx420.androidfinal.ui.screens.components.LoadingIndicator
 import ovo.sypw.wmx420.androidfinal.ui.screens.home.components.BannerView
@@ -27,7 +29,10 @@ import ovo.sypw.wmx420.androidfinal.ui.screens.home.components.NewsItem
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = koinInject()
+    viewModel: HomeViewModel = koinInject(),
+    onBannerClick: (Banner) -> Unit,
+    onNewsClick: (News) -> Unit,
+    on何意味Click: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val bannerList by viewModel.bannerList.collectAsState()
@@ -67,23 +72,20 @@ fun HomeScreen(
                             item(key = "banner") {
                                 BannerView(
                                     bannerList = bannerList,
-                                    onClick = {
-//                        TODO
-                                    })
+                                    onClick = onBannerClick
+                                )
                             }
                         }
-                        item(key = "何意味button"){
+                        item(key = "何意味button") {
                             CategoryButtonRow(
-                                onCategoryClick = {  },
+                                onCategoryClick = on何意味Click,
                             )
                         }
                         items(newsList, key = { it.id }) { news ->
                             Log.d("HomeScreen", "NewsList: $news")
                             NewsItem(
                                 news = news,
-                                onClick = {
-//                    TODO
-                                },
+                                onClick = { onNewsClick(news) },
                             )
                         }
                         if ((uiState as HomeUiState.Success).hasMore) {

@@ -65,52 +65,52 @@ android {
         debugImplementation(libs.androidx.compose.ui.tooling)
 
         implementation(libs.androidx.navigation.compose)
-        implementation("androidx.compose.material:material-icons-extended:1.7.8")
+        implementation(libs.androidx.compose.material.icons.extended)
 
         // 生命周期监听 (Lifecycle & ViewModel)
-        implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
-        implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
-        implementation("androidx.lifecycle:lifecycle-process:2.10.0")
+        implementation(libs.androidx.lifecycle.runtime.ktx)
+        implementation(libs.androidx.lifecycle.viewmodel.compose)
+        implementation(libs.androidx.lifecycle.process)
 
         // Google Ads
         implementation("com.google.android.gms:play-services-ads:24.9.0")
 
         // Kotlin Coroutines
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
+        implementation(libs.kotlinx.coroutines.android)
+        implementation(libs.kotlinx.coroutines.play.services)
 
         // 依赖注入 (Koin)
-        implementation("io.insert-koin:koin-android:4.1.1")
-        implementation("io.insert-koin:koin-androidx-compose:4.1.1")
+        implementation(libs.koin.android)
+        implementation(libs.koin.androidx.compose)
 
         // 网络请求 (Retrofit & Gson)
         implementation("com.squareup.retrofit2:retrofit:3.0.0")
-        implementation("com.squareup.retrofit2:converter-gson:3.0.0")
-        implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+        implementation(libs.converter.gson)
+        implementation(libs.retrofit2.kotlinx.serialization.converter)
         // Kotlin Serialization JSON 库
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+        implementation(libs.kotlinx.serialization.json)
 
         // 图片加载
-        implementation("io.coil-kt.coil3:coil-compose:3.3.0")
-        implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+        implementation(libs.coil.compose)
+        implementation(libs.coil.network.okhttp)
 
         // Firebase
         implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
-        implementation("com.google.firebase:firebase-analytics")
-        implementation("com.google.firebase:firebase-auth")
-        implementation("com.google.firebase:firebase-firestore")
+        implementation(libs.firebase.analytics)
+        implementation(libs.firebase.auth)
+        implementation(libs.firebase.firestore)
 
         // Media3 ExoPlayer
-        implementation("androidx.media3:media3-exoplayer:1.9.0")
-        implementation("androidx.media3:media3-ui:1.9.0")
+        implementation(libs.androidx.media3.exoplayer)
+        implementation(libs.androidx.media3.ui)
 
         // Compose Chart
         implementation("com.patrykandpatrick.vico:compose-m3:2.4.1")
 
         // Compose WebView
-        implementation("io.github.kevinnzou:compose-webview:0.33.6")
+        implementation(libs.compose.webview)
 
         // AI agent
-        implementation("ai.koog:koog-agents:0.6.0")
+        implementation(libs.koog.agents)
     }
 }

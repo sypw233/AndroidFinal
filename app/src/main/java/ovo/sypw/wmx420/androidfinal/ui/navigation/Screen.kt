@@ -5,11 +5,19 @@ import kotlinx.serialization.Serializable
 // 定义所有可能的路由
 sealed class Screen {
     @Serializable
+    data object Main : Screen()
+    @Serializable
     data object Home : Screen()
+
     @Serializable
     data object Video : Screen()
+
     @Serializable
     data object Me : Screen()
+
     @Serializable
-    data class WebView(val url: String) : Screen()
+    data class WebView(
+        val url: String,
+        val title: String = ""
+    ) : Screen()
 }

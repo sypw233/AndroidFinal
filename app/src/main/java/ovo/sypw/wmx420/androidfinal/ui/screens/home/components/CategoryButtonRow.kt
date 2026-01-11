@@ -15,8 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,10 +40,10 @@ fun CategoryButtonRow(
     modifier: Modifier = Modifier
 ) {
     val categories = listOf(
-        CategoryItem("android", "Android学科", Icons.Default.Android, Color(0xFF8BC34A)),
-        CategoryItem("java", "Java学科", Icons.Default.Code, Color(0xFF9C27B0)),
-        CategoryItem("php", "PHP学科", Icons.Default.Language, Color(0xFFE91E63)),
-        CategoryItem("python", "Python学科", Icons.Default.PhoneAndroid, Color(0xFF2196F3))
+        CategoryItem("android", "Android", Icons.Default.Android, Color(0xFF8BC34A)),
+        CategoryItem("jsp", "JSP", Icons.Default.Code, Color(0xFF9C27B0)),
+        CategoryItem("jquery", "jQuery", Icons.Default.Code, Color(0xFFE91E63)),
+        CategoryItem("servlet", "Servlet", Icons.Default.Code, Color(0xFF2196F3))
     )
 
     Row(
