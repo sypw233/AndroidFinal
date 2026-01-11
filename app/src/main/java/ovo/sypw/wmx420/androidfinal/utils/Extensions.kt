@@ -30,7 +30,14 @@ fun String.formatDate(): String {
         this
     }
 }
-
+fun Long.formatCount(): String {
+    return when {
+        this >= 100000000 -> String.format("%.1f亿", this / 100000000.0)
+        this >= 10000 -> String.format("%.1f万", this / 10000.0)
+        this >= 1000 -> String.format("%.1fk", this / 1000.0)
+        else -> this.toString()
+    }
+}
 fun FirebaseUser.toUser(): User {
     return User(
         uid = uid,

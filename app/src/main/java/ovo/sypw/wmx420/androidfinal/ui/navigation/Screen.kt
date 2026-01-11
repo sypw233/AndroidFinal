@@ -10,6 +10,11 @@ sealed class Screen {
     data object Home : Screen()
 
     @Serializable
+    data object BilibiliRank: Screen()
+    @Serializable
+    data object Chart : Screen()
+
+    @Serializable
     data object Video : Screen()
 
     @Serializable

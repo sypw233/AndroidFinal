@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ovo.sypw.wmx420.androidfinal.ui.navigation.Screen
+import ovo.sypw.wmx420.androidfinal.ui.screens.bilibilirank.BilibiliRankScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.home.HomeScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.me.MeScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.video.VideoScreen
@@ -101,6 +102,18 @@ fun MainScreen(navController: NavHostController) {
 
                         }
 
+                    }
+                )
+            }
+            composable<Screen.BilibiliRank> {
+                BilibiliRankScreen(
+                    onVideoClick = { item ->
+                        navController.navigate(
+                            Screen.WebView(
+                                url = "https://m.bilibili.com/video/${item.bvid}",
+                                title = item.title
+                            )
+                        )
                     }
                 )
             }

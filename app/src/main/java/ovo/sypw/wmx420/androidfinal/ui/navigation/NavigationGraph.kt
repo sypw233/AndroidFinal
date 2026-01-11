@@ -27,7 +27,7 @@ fun AppNavigation(
 ) {
     val context = LocalContext.current
     val adEnable = PreferenceUtils.isAdEnabled(context)
-    val firstLaunch = PreferenceUtils.isFirstLaunch(context)
+    val firstLaunch = PreferenceUtils.getFirstLaunch(context)
     val googleAdEnable = PreferenceUtils.enableGoogleAd(context)
     val startDestination = if (firstLaunch) {
         Screen.Intro

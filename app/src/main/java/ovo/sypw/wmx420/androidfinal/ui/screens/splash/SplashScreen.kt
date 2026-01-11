@@ -130,7 +130,7 @@ private fun navigateNext(
     onNavigateToIntro: () -> Unit,
     onNavigateToMain: () -> Unit
 ) {
-    if (PreferenceUtils.isFirstLaunch(context)) {
+    if (PreferenceUtils.getFirstLaunch(context)) {
         onNavigateToIntro()
     } else {
         onNavigateToMain()

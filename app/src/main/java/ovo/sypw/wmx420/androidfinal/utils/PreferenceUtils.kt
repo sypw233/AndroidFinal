@@ -23,7 +23,7 @@ object PreferenceUtils {
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     }
 
-    fun isFirstLaunch(context: Context): Boolean {
+    fun getFirstLaunch(context: Context): Boolean {
         return getPreferences(context).getBoolean(KEY_FIRST_LAUNCH, true)
     }
 
