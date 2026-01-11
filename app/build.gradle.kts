@@ -68,13 +68,16 @@ android {
         implementation(libs.androidx.navigation.compose)
         implementation(libs.androidx.compose.material.icons.extended)
 
+        implementation(libs.androidx.compose.foundation)
+        implementation(libs.androidx.compose.animation)
+
         // 生命周期监听 (Lifecycle & ViewModel)
         implementation(libs.androidx.lifecycle.runtime.ktx)
         implementation(libs.androidx.lifecycle.viewmodel.compose)
         implementation(libs.androidx.lifecycle.process)
 
         // Google Ads
-        implementation("com.google.android.gms:play-services-ads:24.9.0")
+        implementation(libs.play.services.ads)
 
         // Kotlin Coroutines
         implementation(libs.kotlinx.coroutines.android)
@@ -85,7 +88,7 @@ android {
         implementation(libs.koin.androidx.compose)
 
         // 网络请求 (Retrofit & Gson)
-        implementation("com.squareup.retrofit2:retrofit:3.0.0")
+        implementation(libs.retrofit)
         implementation(libs.converter.gson)
         implementation(libs.retrofit2.kotlinx.serialization.converter)
         // Kotlin Serialization JSON 库
@@ -106,7 +109,7 @@ android {
         implementation(libs.androidx.media3.ui)
 
         // Compose Chart
-        implementation("com.patrykandpatrick.vico:compose-m3:2.4.1")
+        implementation(libs.compose.m3)
 
         // Compose WebView
         implementation(libs.compose.webview)
@@ -114,4 +117,7 @@ android {
         // AI agent
         implementation(libs.koog.agents)
     }
+}
+dependencies {
+    implementation(libs.androidx.compose.animation)
 }
