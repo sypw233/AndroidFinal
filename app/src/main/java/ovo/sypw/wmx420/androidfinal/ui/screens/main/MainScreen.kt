@@ -49,7 +49,7 @@ fun MainScreen(navController: NavHostController) {
     ) { paddingValues ->
         NavHost(
             navController = bottomNavController,
-            startDestination = Screen.Home, // 设置起始页
+            startDestination = Screen.Home,
             modifier = Modifier.padding(paddingValues)
         ) {
             composable<Screen.Home> {
@@ -78,30 +78,25 @@ fun MainScreen(navController: NavHostController) {
                                     title = "Android"
                                 )
                             )
-
                             "jsp" -> navController.navigate(
                                 Screen.WebView(
                                     url = "https://www.runoob.com/jsp/jsp-tutorial.html",
                                     title = "JSP"
                                 )
                             )
-
                             "jquery" -> navController.navigate(
                                 Screen.WebView(
                                     url = "https://www.runoob.com/jquery/jquery-tutorial.html",
                                     title = "jQuery"
                                 )
                             )
-
                             "servlet" -> navController.navigate(
                                 Screen.WebView(
                                     url = "https://www.runoob.com/servlet/servlet-tutorial.html",
                                     title = "Servlet"
                                 )
                             )
-
                         }
-
                     }
                 )
             }

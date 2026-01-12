@@ -108,8 +108,8 @@ android {
         implementation(libs.androidx.media3.exoplayer)
         implementation(libs.androidx.media3.ui)
 
-        // Compose Chart
-        implementation(libs.compose.m3)
+        // Charts
+        implementation(libs.compose.charts)
 
         // Compose WebView
         implementation(libs.compose.webview)

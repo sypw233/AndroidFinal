@@ -87,6 +87,5 @@ fun AppNavigation(
         ) {
             MapScreen { navController.popBackStack() }
         }
-
     }
 }

@@ -1,4 +1,4 @@
-package ovo.sypw.wmx420.androidfinal.ui.screens.components
+package ovo.sypw.wmx420.androidfinal.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import org.koin.compose.koinInject
 import ovo.sypw.wmx420.androidfinal.data.model.User
-import ovo.sypw.wmx420.androidfinal.ui.screens.components.LoadingIndicator
+import ovo.sypw.wmx420.androidfinal.ui.components.LoadingIndicator
 
 @Composable
 fun MeScreen(

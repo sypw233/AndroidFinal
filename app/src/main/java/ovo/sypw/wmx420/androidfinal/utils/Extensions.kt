@@ -38,6 +38,14 @@ fun Long.formatCount(): String {
         else -> this.toString()
     }
 }
+fun Float.formatLargeNumber(): String {
+    return when {
+        this >= 10000 -> "%.1f万".format(this / 10000)
+        this >= 1000 -> "%.1f千".format(this / 1000)
+        this >= 100 -> "%.0f".format(this)
+        else -> "%.1f".format(this)
+    }
+}
 fun FirebaseUser.toUser(): User {
     return User(
         uid = uid,

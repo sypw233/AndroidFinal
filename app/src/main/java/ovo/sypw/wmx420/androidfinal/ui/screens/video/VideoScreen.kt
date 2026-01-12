@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import ovo.sypw.wmx420.androidfinal.data.model.Video
-import ovo.sypw.wmx420.androidfinal.ui.screens.components.ErrorView
-import ovo.sypw.wmx420.androidfinal.ui.screens.components.LoadingIndicator
+import ovo.sypw.wmx420.androidfinal.ui.components.ErrorView
+import ovo.sypw.wmx420.androidfinal.ui.components.LoadingIndicator
 import ovo.sypw.wmx420.androidfinal.ui.screens.video.components.VideoItem
 
 @Composable

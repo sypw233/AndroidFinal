@@ -11,8 +11,13 @@ sealed class Screen {
 
     @Serializable
     data object BilibiliRank: Screen()
+    
     @Serializable
-    data object Chart : Screen()
+    data object LineChart : Screen()
+    @Serializable
+    data object PieChart : Screen()
+    @Serializable
+    data object BarChart : Screen()
 
     @Serializable
     data object Video : Screen()
