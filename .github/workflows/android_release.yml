@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build-and-release:
-    name: Build APKs and Release
+    name: Build APK and Release
     runs-on: ubuntu-latest
 
     steps:
@@ -27,13 +27,6 @@ jobs:
           distribution: 'temurin' # 推荐使用 Eclipse Temurin 发行版，稳定
           cache: 'gradle' # 开启 Gradle 缓存，这一步能显著提升后续构建速度
 
-      # 3. 恢复 Keystore 文件
-      # 将 Base64 存储的 Keystore 还原为实体文件供 Gradle 读取
-      - name: Decode Keystore
-        run: |
-          echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > app/release.jks
-
-      # 4. 授予 Gradle 执行权限
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -41,14 +34,20 @@ jobs:
       # 这里通过环境变量注入签名配置，需要在 build.gradle 中配合读取
       - name: Build with Gradle
         run: ./gradlew assembleRelease
+
+      - name: Sign Release APK
+        id: sign_app
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_FILE }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
         env:
-          SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          SIGNING_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          SIGNING_STORE_FILE: release.jks # 对应步骤3还原的文件路径
+          BUILD_TOOLS_VERSION: "36.0.0"
 
-
-      # 6. 创建 GitHub Release 并上传 APK
+      # 3. 创建 GitHub Release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -57,4 +56,4 @@ jobs:
             app/build/outputs/apk/release/*.apk
           draft: false
           prerelease: false
-          generate_release_notes: true # 自动根据 commit 生成更新日志，省事
+          generate_release_notes: true

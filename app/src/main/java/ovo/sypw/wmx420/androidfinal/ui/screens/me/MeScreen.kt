@@ -149,7 +149,6 @@ fun ProfileCard(
                     contentScale = ContentScale.Crop
                 )
             } else {
-                // 默认头像 (未登录 或 已登录但无头像)
                 Box(
                     modifier = Modifier
                         .size(72.dp)
@@ -179,7 +178,7 @@ fun ProfileCard(
                     "未登录"
                 }
 
-                val subText = user?.email ?: "登录后查看更多内容"
+                val subText = user?.email ?: "登录后也没有更多内容"
 
                 Text(
                     text = displayName,

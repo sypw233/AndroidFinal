@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn io.micrometer.context.ContextAccessor
+-dontwarn javax.enterprise.inject.spi.Extension
+-dontwarn reactor.blockhound.integration.BlockHoundIntegration
