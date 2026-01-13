@@ -1,6 +1,5 @@
 package ovo.sypw.wmx420.androidfinal.ui.screens.bilibilirank.components
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,12 +20,8 @@ fun BilibiliRankChart(
     chartData: ChartData,
     rankingList: List<BilibiliRankingItem>,
     onVideoClick: (BilibiliRankingItem) -> Unit,
-    onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    BackHandler {
-        onBack()
-    }
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),

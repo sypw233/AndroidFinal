@@ -1,14 +1,21 @@
 package ovo.sypw.wmx420.androidfinal.ui.screens.bilibilirank
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -63,6 +70,10 @@ fun BilibiliRankScreen(
     var isExpanded by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (isExpanded) 45f else 0f, label = "rotation")
     var currentChart: ChartType? by remember { mutableStateOf(null) }
+
+    BackHandler(enabled = currentChart != null) {
+        currentChart = null
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -73,6 +84,7 @@ fun BilibiliRankScreen(
                         fontWeight = FontWeight.Bold,
                     )
                 },
+                windowInsets = WindowInsets(0, 0, 0, 0),
             )
         },
         floatingActionButton = {
@@ -137,28 +149,47 @@ fun BilibiliRankScreen(
                 }
 
                 is BilibiliRankUiState.Success -> {
-                    val chart = currentChart
-                    if (chart is ChartType) {
-                        BilibiliRankChart(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(12.dp),
-                            chartType = chart,
-                            chartData = viewModel.getChartData(
-                                currentChart = chart,
-                                rankingList = rankingList
-                            ),
-                            rankingList = rankingList,
-                            onVideoClick = onVideoClick,
-                            onBack = {
-                                currentChart = null
+                    AnimatedContent(
+                        targetState = currentChart,
+                        transitionSpec = {
+                            if (targetState != null && initialState == null) {
+                                // 场景：从 [列表] -> [图表]
+                                // 动作：新页面从右边进来，旧页面往左边出去
+                                (slideInHorizontally { width -> width } + fadeIn()) togetherWith
+                                        (slideOutHorizontally { width -> -width } + fadeOut())
+                            } else if (targetState == null && initialState != null) {
+                                // 场景：从 [图表] -> [列表]
+                                // 动作：新页面从左边进来 (恢复原状)，旧页面往右边出去
+                                (slideInHorizontally { width -> -width } + fadeIn()) togetherWith
+                                        (slideOutHorizontally { width -> width } + fadeOut())
+                            } else {
+                                // 场景：[图表] -> [图表] (如果在图表状态直接切另一种图表)
+                                // 动作：简单的淡入淡出，或者你可以自定义
+                                fadeIn(animationSpec = tween(300)) togetherWith
+                                        fadeOut(animationSpec = tween(300))
                             }
-                        )
-                    } else {
-                        RankList(
-                            rankingList = rankingList,
-                            onVideoClick = onVideoClick
-                        )
+                        },
+                        label = "ChartTransition"
+                    ) { chart ->
+                        if (chart != null) {
+                            BilibiliRankChart(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(12.dp),
+                                chartType = chart,
+                                chartData = viewModel.getChartData(
+                                    currentChart = chart,
+                                    rankingList = rankingList
+                                ),
+                                rankingList = rankingList,
+                                onVideoClick = onVideoClick,
+                            )
+                        } else {
+                            RankList(
+                                rankingList = rankingList,
+                                onVideoClick = onVideoClick
+                            )
+                        }
                     }
                 }
             }

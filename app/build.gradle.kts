@@ -120,4 +120,5 @@ android {
 }
 dependencies {
     implementation(libs.androidx.compose.animation)
+    implementation(libs.androidx.compose.foundation.layout)
 }
