@@ -30,8 +30,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # 5. 编译 Release 包
-      # 这里通过环境变量注入签名配置，需要在 build.gradle 中配合读取
       - name: Build with Gradle
         run: ./gradlew assembleRelease
 
