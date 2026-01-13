@@ -105,10 +105,9 @@ fun SplashScreen(
                     .build()
                 imageLoader.execute(request)
 
-                // 预加载成功后，将URL保存为下次的缓存URL
                 PreferenceUtils.putString(context, KEY_CACHED_SPLASH_URL, nextUrl)
-            } catch (_: Exception) {
-                // 预加载失败时忽略错误，下次启动会使用新URL
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -121,7 +120,6 @@ fun SplashScreen(
         }
         if (!adFinished) {
             adFinished = true
-            navigateToMain()
         }
     }
 

@@ -20,6 +20,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        (application as MyApplication).appOpenAdManager?.loadAd()
+        (application as MyApplication).appOpenAdManager?.showAdIfAvailable()
     }
 }

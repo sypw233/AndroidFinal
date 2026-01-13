@@ -20,7 +20,7 @@ fun AdsSettings(
         mutableStateOf(PreferenceUtils.isAdEnabled(context))
     }
     var googleAdEnable by remember {
-        mutableStateOf(PreferenceUtils.enableGoogleAd(context))
+        mutableStateOf(PreferenceUtils.isEnableGoogleAd(context))
     }
     SettingsSectionHeader("广告设置")
 

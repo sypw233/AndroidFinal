@@ -36,9 +36,7 @@ class AppOpenAdManager(private val application: Application) : DefaultLifecycleO
     private var isLoadingAd = false
     private var isShowingAd = false
     private var currentActivity: Activity? = null
-
-    private var isFirstLaunch = true
-
+    private var isClodLaunch = true
     private var retryAttempt = 0
 
     init {
@@ -51,24 +49,23 @@ class AppOpenAdManager(private val application: Application) : DefaultLifecycleO
     /**
      * 检查是否启用 Google 广告
      */
-    private fun isGoogleAdEnabled(): Boolean {
-        return PreferenceUtils.enableGoogleAd(application)
-    }
+    private fun isGoogleAdEnabled(): Boolean = PreferenceUtils.isEnableGoogleAd(application)
 
     /**
      * 检查广告是否可用
      */
-    private fun isAdAvailable(): Boolean {
-        return appOpenAd != null && !isShowingAd
-    }
+    private fun isAdAvailable(): Boolean = appOpenAd != null && !isShowingAd && !isFirstLaunch() &&isGoogleAdEnabled()
 
     /**
-     * 加载开屏广告（仅在启用 Google 广告时）
+     * 检查是否第一次启动
      */
+    private fun isFirstLaunch(): Boolean = PreferenceUtils.getFirstLaunch(application)
+
+
     /**
-     * 加载开屏广告（仅在启用 Google 广告时）
+     * 加载广告
      */
-    fun loadAd() {
+    private fun loadAd() {
         val googleAdEnabled = isGoogleAdEnabled()
         val adAvailable = isAdAvailable()
         Log.d(
@@ -79,7 +76,6 @@ class AppOpenAdManager(private val application: Application) : DefaultLifecycleO
         // 如果未启用 Google 广告，不加载
         if (!googleAdEnabled) {
             Log.d(TAG, "Google 广告未启用，跳过加载")
-            isFirstLaunch = false
             return
         }
 
@@ -104,14 +100,13 @@ class AppOpenAdManager(private val application: Application) : DefaultLifecycleO
                     retryAttempt = 0 // 重置重试次数
 
                     // 首次启动时立即显示广告
-                    if (isFirstLaunch) {
+                    if (isClodLaunch) {
                         if (currentActivity != null) {
                             Log.d(TAG, "首次启动，Activity已就绪，立即展示广告")
-                            isFirstLaunch = false
+                            isClodLaunch = false
                             showAdIfAvailable()
                         } else {
                             Log.d(TAG, "首次启动，Activity未就绪，等待 onActivityStarted")
-                            // 保持 isFirstLaunch = true，让 onActivityStarted 处理
                         }
                     }
                 }
@@ -130,11 +125,11 @@ class AppOpenAdManager(private val application: Application) : DefaultLifecycleO
                         Log.d(TAG, "将在 ${delayMillis}ms 后重试加载广告 (第 $retryAttempt 次)")
 
                         Handler(Looper.getMainLooper()).postDelayed({
-                            loadAd()
+                            showAdIfAvailable()
                         }, delayMillis)
                     } else {
                         Log.w(TAG, "广告加载重试次数耗尽，不再重试")
-                        isFirstLaunch = false // 超过重试次数，不再尝试
+                        isClodLaunch = false // 超过重试次数，不再尝试
                     }
                 }
             }
@@ -145,33 +140,17 @@ class AppOpenAdManager(private val application: Application) : DefaultLifecycleO
      * 显示开屏广告（如果可用且已启用 Google 广告）
      */
     fun showAdIfAvailable() {
-        Log.d(
-            TAG,
-            "showAdIfAvailable() called. IsShowing: $isShowingAd, IsAdAvailable: ${isAdAvailable()}"
-        )
-        // 如果未启用 Google 广告，不显示
-        if (!isGoogleAdEnabled()) {
-            Log.d(TAG, "Google 广告未启用，不展示")
-            return
-        }
-
-        if (isShowingAd) {
-            Log.d(TAG, "广告正在显示中")
-            return
-        }
-
-        if (!isAdAvailable()) {
-            Log.d(TAG, "广告不可用，尝试加载")
-            loadAd()
-            return
-        }
-
         val activity = currentActivity ?: run {
             Log.e(TAG, "当前 Activity 为 null，无法展示广告")
             return
         }
 
         Log.d(TAG, "准备在 Activity: $activity 展示广告")
+        if (!isAdAvailable()) {
+            Log.d(TAG, "广告不可用，尝试加载")
+            loadAd()
+            return
+        }
 
         appOpenAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
@@ -199,14 +178,12 @@ class AppOpenAdManager(private val application: Application) : DefaultLifecycleO
         appOpenAd?.show(activity)
     }
 
-    // ========== DefaultLifecycleObserver 实现 ==========
 
     override fun onStart(owner: LifecycleOwner) {
-        // 应用从后台切换到前台时显示广告（仅当启用 Google 广告时）
-        if (!isFirstLaunch && isGoogleAdEnabled()) {
+        // 应用从后台切换到前台时显示广告
+        if (isAdAvailable() && isGoogleAdEnabled()) {
             Log.d(TAG, "从后台返回，延迟 1s 展示广告")
             Handler(Looper.getMainLooper()).postDelayed({
-                // 二次检查，避免 1s 后应用又切后台了（虽然 showAdIfAvailable 内部也会检查但多一层保险）
                 if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                     showAdIfAvailable()
                 } else {
@@ -227,9 +204,9 @@ class AppOpenAdManager(private val application: Application) : DefaultLifecycleO
         }
 
         // 检查是否有延迟的冷启动广告需要展示
-        if (isFirstLaunch && isGoogleAdEnabled() && isAdAvailable()) {
+        if (isClodLaunch && isGoogleAdEnabled() && isAdAvailable()) {
             Log.d(TAG, "onActivityStarted: 首次启动，展示等待中的广告")
-            isFirstLaunch = false
+            isClodLaunch = false
             showAdIfAvailable()
         }
     }
