@@ -35,9 +35,9 @@ fun MainScreen(navController: NavHostController) {
         bottomBar = {
             NavigationBar {
                 BottomNavItem.entries.forEach { item ->
-                    val isSelected = currentDestination?.route?.contains(
-                        item.screen::class.qualifiedName ?: ""
-                    ) == true
+                    // 使用 endsWith 精确匹配路由后缀，避免 contains 导致多个项被选中
+                    val screenName = item.screen::class.simpleName ?: ""
+                    val isSelected = currentDestination?.route?.endsWith(screenName) == true
                     NavigationBarItem(
                         icon = {
                             Icon(
