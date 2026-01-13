@@ -33,11 +33,20 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
+import coil3.ImageLoader
 import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import ovo.sypw.wmx420.androidfinal.ui.components.LoadingIndicator
 import ovo.sypw.wmx420.androidfinal.utils.PreferenceUtils
+
+// SharedPreferences 键名
+private const val KEY_CACHED_SPLASH_URL = "cached_splash_url"
+private const val KEY_NEXT_SPLASH_URL = "next_splash_url"
 
 enum class AdType {
     IMAGE, VIDEO
@@ -49,6 +58,14 @@ data class SplashAd(
     val duration: Int = 5,
 )
 
+/**
+ * 生成新的随机图片URL
+ */
+private fun generateNewImageUrl(): String {
+    val index = (0..10000).random()
+    return "https://picsum.photos/480/960?random=$index"
+}
+
 @Composable
 fun SplashScreen(
     navigateToMain: () -> Unit
@@ -56,15 +73,47 @@ fun SplashScreen(
     val context = LocalContext.current
     var countdown by remember { mutableIntStateOf(5) }
     var adFinished by remember { mutableStateOf(false) }
+    var isImageLoaded by remember { mutableStateOf(false) }
+
     val splashAd = remember {
-        val index = (0..10000).random()
+        val cachedUrl = PreferenceUtils.getString(context, KEY_CACHED_SPLASH_URL)
+        val nextUrl = PreferenceUtils.getString(context, KEY_NEXT_SPLASH_URL)
+        val imageUrl = when {
+            cachedUrl.isNotEmpty() -> cachedUrl
+            nextUrl.isNotEmpty() -> nextUrl
+            else -> generateNewImageUrl()
+        }
         SplashAd(
             type = AdType.IMAGE,
-            url = "https://picsum.photos/480/960?random=$index",
+            url = imageUrl,
             duration = 5
         )
     }
 
+    // 预加载下一次启动需要的图片
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            // 生成下一次的URL并保存
+            val nextUrl = generateNewImageUrl()
+            PreferenceUtils.putString(context, KEY_NEXT_SPLASH_URL, nextUrl)
+
+            // 预加载下一次的图片到缓存
+            try {
+                val imageLoader = ImageLoader.Builder(context).build()
+                val request = ImageRequest.Builder(context)
+                    .data(nextUrl)
+                    .build()
+                imageLoader.execute(request)
+
+                // 预加载成功后，将URL保存为下次的缓存URL
+                PreferenceUtils.putString(context, KEY_CACHED_SPLASH_URL, nextUrl)
+            } catch (_: Exception) {
+                // 预加载失败时忽略错误，下次启动会使用新URL
+            }
+        }
+    }
+
+    // 倒计时逻辑
     LaunchedEffect(Unit) {
         while (countdown > 0 && !adFinished) {
             delay(1000L)
@@ -81,16 +130,26 @@ fun SplashScreen(
             .fillMaxSize()
             .background(Color.Black)
     ) {
+
+        if (!isImageLoaded) {
+            LoadingIndicator()
+        }
+
         when (splashAd.type) {
             AdType.IMAGE -> {
                 AsyncImage(
                     model = ImageRequest.Builder(context)
                         .data(splashAd.url)
-                        .crossfade(200)
+                        .crossfade(300)
                         .build(),
                     contentDescription = "开屏广告",
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    onState = { state ->
+                        if (state is AsyncImagePainter.State.Success) {
+                            isImageLoaded = true
+                        }
+                    }
                 )
             }
 
@@ -122,18 +181,6 @@ fun SplashScreen(
                 modifier = Modifier.padding(horizontal = 32.dp, vertical = 16.dp)
             )
         }
-    }
-}
-
-private fun navigateNext(
-    context: android.content.Context,
-    onNavigateToIntro: () -> Unit,
-    onNavigateToMain: () -> Unit
-) {
-    if (PreferenceUtils.getFirstLaunch(context)) {
-        onNavigateToIntro()
-    } else {
-        onNavigateToMain()
     }
 }
 
