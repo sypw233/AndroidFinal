@@ -114,9 +114,6 @@ android {
 
         // Compose WebView
         implementation(libs.compose.webview)
-
-        // AI agent
-        implementation(libs.koog.agents)
     }
 }
 dependencies {

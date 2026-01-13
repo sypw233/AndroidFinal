@@ -15,8 +15,16 @@ data class Video(
                 coverUrl = "https://picsum.photos/seed/v1/800/450",
                 intro = "采用 8K 超清画质，带你领略故宫从春日繁花到冬日皑皑白雪的极致美感。这不仅是一场视觉盛宴，更是一次穿越时空的文化对话。",
                 videoDetailList = listOf(
-                    VideoDetail("1001", "第一集：春风拂过红墙", "https://www.w3schools.com/html/mov_bbb.mp4"),
-                    VideoDetail("1001", "第二集：夏雨润泽琉璃", "https://www.w3schools.com/html/movie.mp4")
+                    VideoDetail(
+                        "1001",
+                        "第一集：春风拂过红墙",
+                        "https://www.w3schools.com/html/mov_bbb.mp4"
+                    ),
+                    VideoDetail(
+                        "1001",
+                        "第二集：夏雨润泽琉璃",
+                        "https://www.w3schools.com/html/movie.mp4"
+                    )
                 )
             ),
             Video(
@@ -25,7 +33,11 @@ data class Video(
                 coverUrl = "https://picsum.photos/seed/v2/800/450",
                 intro = "深度解析 Jetpack Compose 动画系统。从基础的 animate*AsState 到复杂的 Transition，手把手教你打造丝滑的交互体验。",
                 videoDetailList = listOf(
-                    VideoDetail("1002", "1. 布局动画入门", "https://www.w3schools.com/html/mov_bbb.mp4")
+                    VideoDetail(
+                        "1002",
+                        "1. 布局动画入门",
+                        "https://www.w3schools.com/html/mov_bbb.mp4"
+                    )
                 )
             ),
             Video(
@@ -34,9 +46,21 @@ data class Video(
                 coverUrl = "https://picsum.photos/seed/v3/800/450",
                 intro = "从豆子的产地选择到研磨刻度，再到水温与压力的精准控制。这是一场关于风味萃取的科学实验。",
                 videoDetailList = listOf(
-                    VideoDetail("1003", "准备篇：豆种的选择", "https://www.w3schools.com/html/movie.mp4"),
-                    VideoDetail("1003", "实践篇：拉花的艺术", "https://www.w3schools.com/html/movie.mp4"),
-                    VideoDetail("1003", "进阶篇：意式浓缩的秘密", "https://www.w3schools.com/html/mov_bbb.mp4")
+                    VideoDetail(
+                        "1003",
+                        "准备篇：豆种的选择",
+                        "https://www.w3schools.com/html/movie.mp4"
+                    ),
+                    VideoDetail(
+                        "1003",
+                        "实践篇：拉花的艺术",
+                        "https://www.w3schools.com/html/movie.mp4"
+                    ),
+                    VideoDetail(
+                        "1003",
+                        "进阶篇：意式浓缩的秘密",
+                        "https://www.w3schools.com/html/mov_bbb.mp4"
+                    )
                 )
             ),
             Video(
@@ -52,9 +76,9 @@ data class Video(
             ),
             Video(
                 id = "1005",
-                name = "一个超级无敌爆炸长标题的测试视频——为了看看我们的 UI 到底会不会在多行显示时出现挤压或被切断的情况",
+                name = "test1",
                 coverUrl = "https://picsum.photos/seed/v5/800/450",
-                intro = "短介绍。",
+                intro = "111",
                 videoDetailList = emptyList()
             )
         )

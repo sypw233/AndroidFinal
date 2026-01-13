@@ -120,6 +120,7 @@ fun SplashScreen(
         }
         if (!adFinished) {
             adFinished = true
+            navigateToMain()
         }
     }
 
