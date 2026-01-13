@@ -1,8 +1,8 @@
 package ovo.sypw.wmx420.androidfinal.ui.screens.main
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Approval
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.StackedBarChart
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -32,6 +32,6 @@ enum class BottomNavItem(
     Me(
         screen = Screen.Me,
         label = "我的",
-        icon = Icons.Default.Approval
+        icon = Icons.Default.Person
     ),
 }

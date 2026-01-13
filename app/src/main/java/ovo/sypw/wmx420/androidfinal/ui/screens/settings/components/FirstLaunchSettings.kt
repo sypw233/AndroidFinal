@@ -22,7 +22,7 @@ fun FirstLaunchSettings(
     SettingsToggleItem(
         icon = Icons.Default.SettingsBackupRestore,
         title = "首次启动",
-        subtitle = "下次启动时启用Splash",
+        subtitle = "下次启动时启用欢迎页",
         checked = firstLaunch,
         onCheckedChange = {
             firstLaunch = it

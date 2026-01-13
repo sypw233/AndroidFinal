@@ -49,7 +49,11 @@ fun AppNavigation(
                 onBack = { navController.popBackStack() }
             )
         }
-        composable<Screen.VideoDetail> { backStackEntry ->
+        composable<Screen.VideoDetail>(
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = { ExitTransition.None }
+        ) { backStackEntry ->
             val args = backStackEntry.toRoute<Screen.VideoDetail>()
             VideoDetailScreen(
                 videoId = args.videoId,
