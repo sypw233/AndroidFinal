@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import ovo.sypw.wmx420.androidfinal.data.model.Video
+import ovo.sypw.wmx420.androidfinal.ui.components.DoubleBackExit
 import ovo.sypw.wmx420.androidfinal.ui.components.ErrorView
 import ovo.sypw.wmx420.androidfinal.ui.components.LoadingIndicator
 import ovo.sypw.wmx420.androidfinal.ui.screens.video.components.VideoItem
@@ -20,6 +22,7 @@ fun VideoScreen(
     viewModel: VideoViewModel = koinInject(),
     onVideoClick: (Video) -> Unit
 ) {
+    DoubleBackExit(LocalContext.current)
     VideoList(
         viewModel = viewModel,
         onVideoClick = onVideoClick

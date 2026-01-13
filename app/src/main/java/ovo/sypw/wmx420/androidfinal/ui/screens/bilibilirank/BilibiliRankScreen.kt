@@ -44,10 +44,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import ovo.sypw.wmx420.androidfinal.data.model.BilibiliRankingItem
+import ovo.sypw.wmx420.androidfinal.ui.components.DoubleBackExit
 import ovo.sypw.wmx420.androidfinal.ui.components.ErrorView
 import ovo.sypw.wmx420.androidfinal.ui.components.LoadingIndicator
 import ovo.sypw.wmx420.androidfinal.ui.screens.bilibilirank.components.BilibiliRankChart
@@ -70,6 +72,7 @@ fun BilibiliRankScreen(
     var isExpanded by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (isExpanded) 45f else 0f, label = "rotation")
     var currentChart: ChartType? by remember { mutableStateOf(null) }
+    DoubleBackExit(LocalContext.current)
 
     BackHandler(enabled = currentChart != null) {
         currentChart = null

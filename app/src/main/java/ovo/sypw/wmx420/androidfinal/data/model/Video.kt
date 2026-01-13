@@ -34,9 +34,9 @@ data class Video(
                 coverUrl = "https://picsum.photos/seed/v3/800/450",
                 intro = "从豆子的产地选择到研磨刻度，再到水温与压力的精准控制。这是一场关于风味萃取的科学实验。",
                 videoDetailList = listOf(
-                    VideoDetail("1003", "准备篇：豆种的选择", "url_placeholder"),
-                    VideoDetail("1003", "实践篇：拉花的艺术", "url_placeholder"),
-                    VideoDetail("1003", "进阶篇：意式浓缩的秘密", "url_placeholder")
+                    VideoDetail("1003", "准备篇：豆种的选择", "https://www.w3schools.com/html/movie.mp4"),
+                    VideoDetail("1003", "实践篇：拉花的艺术", "https://www.w3schools.com/html/movie.mp4"),
+                    VideoDetail("1003", "进阶篇：意式浓缩的秘密", "https://www.w3schools.com/html/mov_bbb.mp4")
                 )
             ),
             Video(
@@ -44,7 +44,11 @@ data class Video(
                 name = "赛博朋克 2077：夜之城生存指南",
                 coverUrl = "https://picsum.photos/seed/v4/800/450",
                 intro = "在光怪陆离的未来都市，生存是唯一的法则。这里有最全的装备获取攻略与隐藏任务解析。别让这座城市把你生吞活剥了。",
-                videoDetailList = emptyList() // 测试空列表状态
+                videoDetailList = listOf(
+                    VideoDetail("1004", "111", "https://www.w3schools.com/html/movie.mp4"),
+                    VideoDetail("1004", "222", "https://www.w3schools.com/html/movie.mp4"),
+                    VideoDetail("1004", "333", "https://www.w3schools.com/html/mov_bbb.mp4")
+                )
             ),
             Video(
                 id = "1005",

@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import ovo.sypw.wmx420.androidfinal.ui.components.DoubleBackExit
 import ovo.sypw.wmx420.androidfinal.ui.screens.intro.IntroScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.main.MainScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.me.login.LoginScreen
@@ -36,7 +37,7 @@ fun AppNavigation(
     } else {
         Screen.Main
     }
-
+    DoubleBackExit(context)
     NavHost(
         navController = navController,
         startDestination = startDestination, // 设置起始页

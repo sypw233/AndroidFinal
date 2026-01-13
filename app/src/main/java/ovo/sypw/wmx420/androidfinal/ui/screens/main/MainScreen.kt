@@ -1,8 +1,5 @@
 package ovo.sypw.wmx420.androidfinal.ui.screens.main
 
-import android.app.Activity
-import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -11,9 +8,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -21,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import ovo.sypw.wmx420.androidfinal.ui.components.DoubleBackExit
 import ovo.sypw.wmx420.androidfinal.ui.navigation.Screen
 import ovo.sypw.wmx420.androidfinal.ui.screens.bilibilirank.BilibiliRankScreen
 import ovo.sypw.wmx420.androidfinal.ui.screens.home.HomeScreen
@@ -34,20 +29,7 @@ fun MainScreen(navController: NavHostController) {
     val currentDestination = navBackStackEntry?.destination
     val context = LocalContext.current
 
-    // 双击返回退出逻辑
-    var lastBackPressTime by remember { mutableLongStateOf(0L) }
-
-    BackHandler {
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - lastBackPressTime < 2000) {
-            // 两次返回间隔小于2秒，退出应用
-            (context as? Activity)?.finish()
-        } else {
-            // 第一次返回，显示提示
-            lastBackPressTime = currentTime
-            Toast.makeText(context, "再按一次退出应用", Toast.LENGTH_SHORT).show()
-        }
-    }
+    DoubleBackExit(context)
 
     Scaffold(
         bottomBar = {
@@ -103,8 +85,8 @@ fun MainScreen(navController: NavHostController) {
                             )
                         )
                     },
-                    on何意味Click = { 何意味 ->
-                        when (何意味) {
+                    onCenterButtonClick = { route ->
+                        when (route) {
                             "android" -> navController.navigate(
                                 Screen.WebView(
                                     url = "https://www.runoob.com/w3cnote/android-tutorial-end.html",

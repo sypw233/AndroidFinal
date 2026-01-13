@@ -33,11 +33,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import org.koin.compose.koinInject
 import ovo.sypw.wmx420.androidfinal.data.model.User
+import ovo.sypw.wmx420.androidfinal.ui.components.DoubleBackExit
 import ovo.sypw.wmx420.androidfinal.ui.components.LoadingIndicator
 
 @Composable
@@ -48,6 +50,7 @@ fun MeScreen(
     onSettingsClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    DoubleBackExit(LocalContext.current)
     Column(
         modifier = Modifier
             .fillMaxSize()

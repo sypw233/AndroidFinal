@@ -46,7 +46,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinInject(),
     onBannerClick: (Banner) -> Unit,
     onNewsClick: (News) -> Unit,
-    on何意味Click: (String) -> Unit,
+    onCenterButtonClick: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val bannerList by viewModel.bannerList.collectAsState()
@@ -101,7 +101,7 @@ fun HomeScreen(
                         }
                         item(key = "何意味button") {
                             CategoryButtonRow(
-                                onCategoryClick = on何意味Click,
+                                onCategoryClick = onCenterButtonClick,
                             )
                         }
                         items(newsList, key = { it.id }) { news ->
